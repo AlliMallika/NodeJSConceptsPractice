@@ -4,7 +4,14 @@ const db = require('./db');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json())//req.body
 
+//Middleware Function
+const logRequest = (req, res, next)=>{
+    console.log(`[${new Date().toLocaleString()}] Request made to : ${req.originUrl}`);
+    next();  //Move on to the next phase
+}
+
 const Person = require('./models/Person');
+app.use(logRequest);
 const personRoutes = require('./routes/personRoutes');
 app.use('/person', personRoutes);
 
